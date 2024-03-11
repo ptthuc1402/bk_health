@@ -43,7 +43,7 @@ const menuGroups = ref([
                   />
                 </svg>`,
         label: 'Dashboard',
-        route: '#',
+        route: '/home',
         children: [{ label: 'eCommerce', route: '/' }]
       },
       {
@@ -60,8 +60,8 @@ const menuGroups = ref([
                     fill=""
                   />
                 </svg>`,
-        label: 'Calendar',
-        route: '/calendar'
+        label: 'OCR Detect',
+        route: '/ocr'
       },
       {
         icon: `<svg

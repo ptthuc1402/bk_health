@@ -5,7 +5,7 @@ import SigninView from '@/views/Authentication/SigninView.vue'
 import SignupView from '@/views/Authentication/SignupView.vue'
 // @ts-ignore
 import ECommerceView from '@/views/Dashboard/ECommerceView.vue'
-
+import OCRView from '@/views/OCR/OCRView.vue'
 const routes = [
   {
     path: '/signin',
@@ -27,6 +27,11 @@ const routes = [
     path: '/home',
     name: 'home',
     component: ECommerceView
+  },
+  {
+    path: '/ocr',
+    name: 'ocr',
+    component: OCRView
   }
 ]
 
