@@ -11,8 +11,8 @@ const value = computed({
 </script>
 
 <template>
-  <div class="mb-4">
-    <label class="mb-2.5 block font-medium text-black dark:text-white">{{ props.label }}</label>
+  <div class="mb-2">
+    <label class="mb-2 block font-medium text-black dark:text-white">{{ props.label }}</label>
     <div class="relative">
       <input
         v-model="value"

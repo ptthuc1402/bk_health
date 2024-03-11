@@ -1,5 +1,6 @@
-<script setup lang="ts">
+<script setup>
 import { onClickOutside } from '@vueuse/core'
+import axios from 'axios';
 import { ref } from 'vue'
 
 const target = ref(null)
@@ -124,7 +125,8 @@ onClickOutside(target, () => {
       </ul>
       <button
         class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-      >
+        @click="logout()"
+        >
         <svg
           class="fill-current"
           width="22"
@@ -148,3 +150,15 @@ onClickOutside(target, () => {
     <!-- Dropdown End -->
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
+}
+}
+ 
+</script>

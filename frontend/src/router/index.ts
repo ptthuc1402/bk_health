@@ -1,99 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+// @ts-ignore
 import SigninView from '@/views/Authentication/SigninView.vue'
+// @ts-ignore
 import SignupView from '@/views/Authentication/SignupView.vue'
-import CalendarView from '@/views/CalendarView.vue'
-import BasicChartView from '@/views/Charts/BasicChartView.vue'
+// @ts-ignore
 import ECommerceView from '@/views/Dashboard/ECommerceView.vue'
-import FormElementsView from '@/views/Forms/FormElementsView.vue'
-import FormLayoutView from '@/views/Forms/FormLayoutView.vue'
-import SettingsView from '@/views/Pages/SettingsView.vue'
-import ProfileView from '@/views/ProfileView.vue'
-import TablesView from '@/views/TablesView.vue'
-import AlertsView from '@/views/UiElements/AlertsView.vue'
-import ButtonsView from '@/views/UiElements/ButtonsView.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'eCommerce',
-    component: ECommerceView,
-    meta: {
-      title: 'eCommerce Dashboard'
-    }
-  },
-  {
-    path: '/calendar',
-    name: 'calendar',
-    component: CalendarView,
-    meta: {
-      title: 'Calendar'
-    }
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: ProfileView,
-    meta: {
-      title: 'Profile'
-    }
-  },
-  {
-    path: '/forms/form-elements',
-    name: 'formElements',
-    component: FormElementsView,
-    meta: {
-      title: 'Form Elements'
-    }
-  },
-  {
-    path: '/forms/form-layout',
-    name: 'formLayout',
-    component: FormLayoutView,
-    meta: {
-      title: 'Form Layout'
-    }
-  },
-  {
-    path: '/tables',
-    name: 'tables',
-    component: TablesView,
-    meta: {
-      title: 'Tables'
-    }
-  },
-  {
-    path: '/pages/settings',
-    name: 'settings',
-    component: SettingsView,
-    meta: {
-      title: 'Settings'
-    }
-  },
-  {
-    path: '/charts/basic-chart',
-    name: 'basicChart',
-    component: BasicChartView,
-    meta: {
-      title: 'Basic Chart'
-    }
-  },
-  {
-    path: '/ui-elements/alerts',
-    name: 'alerts',
-    component: AlertsView,
-    meta: {
-      title: 'Alerts'
-    }
-  },
-  {
-    path: '/ui-elements/buttons',
-    name: 'buttons',
-    component: ButtonsView,
-    meta: {
-      title: 'Buttons'
-    }
-  },
   {
     path: '/signin',
     name: 'signin',
@@ -109,6 +22,11 @@ const routes = [
     meta: {
       title: 'Signup'
     }
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: ECommerceView
   }
 ]
 
@@ -116,5 +34,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 });
+
+router.beforeEach((to, from, next) => {
+const isLoggedIn = localStorage.getItem('user')
+const publicPages = ['/signin', '/signup',];
+const authRequired = !publicPages.includes(to.path);
+  if(authRequired && !isLoggedIn) {
+    next('/signin');
+  } else {
+    next();
+  }
+})
 
 export default router

@@ -2,7 +2,8 @@ require('dotenv').config;
 const User = require("../models/user.model.js");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const secret = process.env.SECRET_KEY
+const secret = process.env.SECRET_KEY;
+require ('../passport.js');
 
 // Create and Save a new users
 
@@ -50,12 +51,17 @@ exports.register = async function (req, res) {
 
                 // create users and token to login
                 const user = await User.create({ email, password: hashedPassword, name: name, role_id:2});
-                console.log(user);
                 const token = jwt.sign({ email: user.email, id: user._id }, `${secret}`, { expiresIn: "3h" });
                 const role_id = user.role_id;
                 
                 status = true;
-                res.status(201).json({ status,token,role_id });
+                res.status(200).json({ 
+                    status,
+                    token,
+                    role_id,
+                    email: user.email,
+                    username: user.username
+                });
             }
      
          } catch (error) {
@@ -67,13 +73,13 @@ exports.register = async function (req, res) {
 // authen users
 exports.signin = async function (req, res) {
     const { email, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     let message = {
         email: '',
         password: ''
     };
     const validate = validateSignIn(email, password);
-    // console.log(validate)
+    console.log(validate)
     var status =false;
     try {
             if(!validate.status) {
@@ -84,6 +90,7 @@ exports.signin = async function (req, res) {
             else{
                 
                 const oldUser = await User.findOne({ email });
+                // console.log(oldUser.role_id);
 
                 if (!oldUser) return res.status(404).json({ message: {noti: "Tài khoản không tồn tại"} });
 
@@ -91,13 +98,18 @@ exports.signin = async function (req, res) {
 
                 if (!isPasswordCorrect) return res.status(400).json({ message: {noti: "Mật khẩu hoặc tên tài khoản không đúng"} });
 
-                
-                const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, { expiresIn: "3h" });
+                const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, `${secret}`, { expiresIn: "3h" });
               
                 const role_id = oldUser.role_id;
 
                 var status = true;
-                res.status(200).json({ status,token,role_id});
+                res.status(200).json({ 
+                    status,
+                    token,
+                    role_id,
+                    name: oldUser.name,
+                    email: oldUser.email
+                });
             }
     } catch (err) {
         res.status(500).json({ message: {noti: "Something went wrong!"} });

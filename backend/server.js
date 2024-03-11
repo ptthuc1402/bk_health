@@ -1,6 +1,6 @@
 require('dotenv').config;
 
-var express = require("express");
+var express = require('express');
 
 const bodyParser = require('body-parser');
 
@@ -9,6 +9,10 @@ const cors = require('cors');
 const properties = require('./config/properties');
 
 const db = require ('./config/database');
+
+var cookieSession = require('cookie-session');
+
+const passport = require('passport')
 
 var app = express();
 
@@ -30,20 +34,29 @@ app.use(
     })
 );
 
-// Cors
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// // Cors
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-// parse requests of content-type - application/json
-app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
 
+// cookie-session
+app.use(
+    cookieSession({
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      keys: [`${process.env.SECRET_KEY}`]
+    })
+  );
+app.use(passport.initialize());
+app.use(passport.session());
 
 // DB
 db();
