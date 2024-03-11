@@ -5,10 +5,9 @@ import 'flatpickr/dist/flatpickr.min.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import VueApexCharts from 'vue3-apexcharts'
-import i18n from '@/views/OCR/i18n';
+import i18n from '@/views/OCR/i18n'
 import App from './App.vue'
 import router from './router'
-
 
 const app = createApp(App)
 

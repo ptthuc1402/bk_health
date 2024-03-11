@@ -3,42 +3,42 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // create table users
-const userSchema = new Schema(
+const appointSchema = new Schema(
   {
     name: {
       type: String,
-      require: true,
     },
     email: {
       type: String,
-      require: true,
-      unique: true,
     },
-    password: {
-      type: String,
-      require: true,
-    },
-    role_id: {
-      type: String,
-      require: true,
-    },
-    googleId: {
-      type: String,
-      require: false,
-    },
-    accessToken: {
+    birth: {
       type: String,
     },
-    picture: {
+    phone: {
       type: String,
     },
-    idToken: {
+    address: {
+      type: String,
+    },
+    sex: {
+      type: String,
+    },
+    spec: {
+      type: String,
+    },
+    date: {
+      type: String,
+    },
+    time: {
+      type: String,
+    },
+    sym: {
       type: String,
     },
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("users", userSchema);
+const Appoint = mongoose.model("appoint", appointSchema);
 
-module.exports = User;
+module.exports = Appoint;
