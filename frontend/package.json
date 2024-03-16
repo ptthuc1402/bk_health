@@ -13,13 +13,18 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tensorflow/tfjs": "^1.7.4",
+    "@tensorflow/tfjs-core": "^1.7.4",
     "@vueuse/core": "^10.7.1",
     "apexcharts": "^3.45.1",
     "axios": "^1.6.7",
+    "canvas": "^2.11.2",
+    "face-api.js": "^0.22.2",
     "flatpickr": "^4.6.13",
     "jsvectormap": "^1.5.3",
     "pinia": "^2.1.7",
     "tesseract.js": "^4.1.2",
+    "tfjs-image-recognition-base": "^0.6.2",
     "vicons": "^0.0.1",
     "vue": "^3.3.11",
     "vue-clipboard3": "^2.0.0",

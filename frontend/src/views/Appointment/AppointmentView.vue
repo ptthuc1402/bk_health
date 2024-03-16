@@ -7,9 +7,9 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
       <div class="p-4 rounded-lg dark:border-gray-700">
         <div class="grid grid-cols-3 gap-4 mb-4 mt-[50px]">
           <div
-            class="flex items-center justify-center h-24 rounded rounded-2xl text-white bg-slate-700"
+            class="flex items-center justify-center h-24 p-4 drop-shadow-xl border-black rounded rounded-2xl text-black bg-white"
           >
-            <p class="text-2xl text-white font-bold flex inline">
+            <p class="text-2xl text-black font-bold flex inline">
               <svg
                 class="w-7 h-7 mr-4 mt-1 dark:text-white"
                 aria-hidden="true"
@@ -42,13 +42,13 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
             <th scope="col" class="px-6 py-3 w-[100px]">Địa chỉ</th>
             <th scope="col" class="px-6 py-3 w-[100px]">Chuyên khoa</th>
             <th scope="col" class="px-6 py-3 w-[100px]">Thời gian</th>
-            <th scope="col" class="px-6 py-3 w-[100px]">Triệu chứng</th>
-          </tr>
+              <th scope="col" class="px-6 py-3 w-[100px]">Triệu chứng</th>
+            </tr>
         </thead>
         <tbody>
           <tr
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 w-[100px]"
-            v-for="(appoinment, index) in appoinments"
+            v-for="(appoinment) in appoinments" :key="appoinment"
           >
             <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
               {{ appoinment.name }}

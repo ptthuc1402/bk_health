@@ -7,8 +7,8 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
     <div class="p-4 sm:ml-20">
       <div class="p-4 rounded-lg dark:border-gray-700">
         <div class="grid grid-cols-3 gap-4 mb-4">
-          <div class="flex items-center justify-center h-24 rounded rounded-2xl bg-slate-700">
-            <p class="text-2xl text-white font-bold flex inline">
+          <div class="flex items-center justify-center h-24 p-4 drop-shadow-xl border-black rounded rounded-2xl text-black bg-white">
+            <p class="text-2xl text-black font-bold flex inline">
               <svg
                 class="mr-4 mt-1 flex-shrink-0 w-6 h-6 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                 aria-hidden="true"
@@ -91,10 +91,11 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
               </tr>
             </thead>
             <tbody>
-              <tr
+              <div v-if="patients_search.length">
+                <tr
                 class="bg-white border-b text-lg dark:bg-gray-900 dark:border-gray-700"
-                v-if="patients_search.length === 0"
-                v-for="(patient, index) in patients"
+                v-for="(patient) in patients"
+                :key="patient"
               >
                 <th
                   scope="row"
@@ -128,12 +129,14 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
                   {{ patient.drug }}
                 </td>
               </tr>
-
+              </div>
+        
               <!-- search -->
               <tr
                 class="bg-white border-b text-lg dark:bg-gray-900 dark:border-gray-700"
                 v-else
-                v-for="(patient, index) in patients_search"
+                v-for="(patient) in patients_search"
+                :key="patient"
               >
                 <th
                   scope="row"
@@ -176,7 +179,6 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 <script>
 import axios from 'axios'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 export default {
   data() {
     return {
@@ -186,7 +188,7 @@ export default {
     }
   },
   mounted() {
-    const data = this.search
+    // const data = this.search  data cho nay làm cái đéo gì vậy ông :)))
     axios
       .get('http://localhost:8080/patient/index', {})
       .then((response) => [(this.patients = response.data.patients)])
