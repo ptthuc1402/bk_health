@@ -2,6 +2,7 @@ require("dotenv").config;
 
 var express = require("express");
 
+const Patient = require("./models/patient.model.js");
 const bodyParser = require("body-parser");
 
 const cors = require("cors");
@@ -9,6 +10,9 @@ const cors = require("cors");
 const properties = require("./config/properties");
 
 const db = require("./config/database");
+
+const fs = require("fs");
+const path = require("path");
 
 var cookieSession = require("cookie-session");
 
@@ -60,7 +64,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
 // DB
 db();
 
@@ -71,8 +74,42 @@ require("./routes/patient.routes")(app);
 require("./routes/doctor.routes")(app);
 require("./routes/appoint.routes")(app);
 // routes
+
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my web" });
+});
+// Route to handle image upload
+app.post("/take_photo", async (req, res) => {
+  const fileName = "img.jpg";
+  const old_patient = await Patient.findOne({ patient_id: req.body.id });
+  console.log(old_patient);
+  if (old_patient) {
+    const patient_id = old_patient._id;
+    console.log(patient_id);
+    const patient = await Patient.findByIdAndUpdate(patient_id, {
+      img_url: req.body.image,
+    });
+  }
+  const imageData = req.body.image;
+  const base64Data = imageData.replace(/^data:image\/jpeg;base64,/, ""); // Remove data URL header
+  const imageBuffer = Buffer.from(base64Data, "base64"); // Convert base64 string to buffer
+
+  // const fileName = "photo_" + Date.now() + ".jpg"; // Unique filename
+  const filePath = `D:/bk_health/frontend/storage/${
+    req.body.name + "_" + req.body.id
+  }/${fileName}`;
+  // const filePath = string.join("uploads", fileName); // Path to save image
+
+  // Write image buffer to file
+  fs.writeFile(filePath, imageBuffer, (err) => {
+    if (err) {
+      console.error("Error saving image:", err);
+      res.status(500).send("Error saving image");
+    } else {
+      console.log("Image saved successfully:", fileName);
+      res.send("Image saved successfully");
+    }
+  });
 });
 
 // set port, listen to requests

@@ -19,6 +19,7 @@ import AddAppointmentView from '@/views/Appointment/AddAppointmentView.vue'
 // @ts-ignore
 import FaceDetectView from '@/views/FaceDetect/FaceDetectView.vue'
 
+import TakePhotoComponent from '@/views/TakePhoto/TakePhotoComponent.vue'
 const routes = [
   {
     path: '/signin',
@@ -78,8 +79,12 @@ const routes = [
     meta: {
       title: 'face_detect'
     }
+  },
+  {
+    path: '/take_photo',
+    name: 'take_photo',
+    component: TakePhotoComponent
   }
-
 ]
 
 const router = createRouter({

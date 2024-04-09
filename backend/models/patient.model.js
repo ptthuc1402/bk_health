@@ -54,6 +54,9 @@ const patientSchema = new Schema(
     patient_id: {
       type: String,
     },
+    img_url: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
