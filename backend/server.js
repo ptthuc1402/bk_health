@@ -10,7 +10,6 @@ const cors = require("cors");
 const properties = require("./config/properties");
 
 const db = require("./config/database");
-
 const fs = require("fs");
 const path = require("path");
 
@@ -29,7 +28,8 @@ var router = express.Router();
 var whitelist = properties.CORS;
 
 app.use(cors(whitelist));
-
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -78,6 +78,7 @@ require("./routes/appoint.routes")(app);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to my web" });
 });
+
 // Route to handle image upload
 app.post("/take_photo", async (req, res) => {
   const fileName = "img.jpg";
@@ -93,7 +94,13 @@ app.post("/take_photo", async (req, res) => {
   const imageData = req.body.image;
   const base64Data = imageData.replace(/^data:image\/jpeg;base64,/, ""); // Remove data URL header
   const imageBuffer = Buffer.from(base64Data, "base64"); // Convert base64 string to buffer
+  var dir = `D:/bk_health/frontend/storage/${
+    req.body.name + "_" + req.body.id
+  }`;
 
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
   // const fileName = "photo_" + Date.now() + ".jpg"; // Unique filename
   const filePath = `D:/bk_health/frontend/storage/${
     req.body.name + "_" + req.body.id

@@ -1,5 +1,6 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import OCRView from '@/views/OCR/OCRView.vue'
 </script>
 <template>
   <DefaultLayout>
@@ -11,6 +12,7 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
     <div id="myComponent" class="flex justify-center items-center mt-16">
       <video class="detect" id="video" width="900" height="700" autoplay muted></video>
     </div>
+    <!-- <OCRView> </OCRView> -->
   </DefaultLayout>
 </template>
 
@@ -35,7 +37,8 @@ export default {
     return {
       openCam: true,
       stream: null,
-      labels: []
+      labels: [],
+      isDetect: false
     }
   },
 
@@ -118,7 +121,13 @@ export default {
         results.forEach((bestMatch, i) => {
           const box = detections[i].detection.box
           const text = bestMatch.toString()
-
+          const text_result = text.slice(text.length - 10, text.length - 7)
+          console.log(text, text_result)
+          if (text && text.slice(0, 7) != 'unknown') {
+            localStorage.setItem('patient_id', JSON.stringify(text_result))
+            localStorage.setItem('is_scan', true)
+            window.location.href = '/ocr'
+          }
           const drawBox = new faceapi.draw.DrawBox(box, { label: text })
           drawBox.draw(canvas)
         })

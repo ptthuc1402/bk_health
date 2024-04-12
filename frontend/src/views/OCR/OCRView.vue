@@ -330,11 +330,11 @@ onMounted(async () => {
             Copy text
           </button>
           <button
+            v-if="isScan"
+            @click="scanPatient"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
-            <router-link to="/">
-              <p class="text-center btn normal-case">Return Home</p>
-            </router-link>
+            <p class="text-center btn normal-case">Đã có thông tin bệnh nhân, ấn để show !</p>
           </button>
         </div>
       </div>
@@ -484,6 +484,115 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
+    <div v-if="patient_scan">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          v-if="patient_scan.name != ''"
+        >
+          <thead
+            class="text-base text-white uppercase bg-slate-700 dark:bg-gray-700 dark:text-gray-400"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">Patient ID</th>
+              <th scope="col" class="px-6 py-3">Patient name</th>
+              <th scope="col" class="px-6 py-3">Age</th>
+              <th scope="col" class="px-6 py-3">Job</th>
+              <th scope="col" class="px-6 py-3">Reason To Hospital</th>
+              <th scope="col" class="px-6 py-3">Status</th>
+              <th scope="col" class="px-6 py-3">Symptom</th>
+              <th scope="col" class="px-6 py-3">Temperature, blood pressure, pulse, heart beat</th>
+              <th scope="col" class="px-6 py-3">Diagnose</th>
+              <th scope="col" class="px-6 py-3">Drug</th>
+              <th scope="col" class="px-6 py-3">Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border-b text-lg dark:bg-gray-900 dark:border-gray-700">
+              <td class="px-6 py-4">
+                <span v-if="!isEditable"> {{ patient_scan.patient_id }} </span>
+                <input class="w-[150px]" v-else v-model="patient_scan.patient_id" />
+              </td>
+              <td class="px-6 py-4">
+                <span v-if="!isEditable"> {{ patient_scan.name }} </span>
+                <input class="w-[150px]" v-else v-model="patient_scan.name" />
+              </td>
+              <td class="px-6 py-4">
+                <span v-if="!isEditable"> {{ patient_scan.age }} </span>
+                <input class="w-[100px]" v-else v-model="patient_scan.age" />
+              </td>
+
+              <td class="px-6 py-4">
+                <span v-if="!isEditable">{{ patient_scan.job }} </span>
+                <input class="w-[100px]" v-else v-model="patient_scan.job" />
+              </td>
+              <td class="px-6 py-4 text-black">
+                <span v-if="!isEditable"> {{ patient_scan.reason_to_hos }}</span>
+                <input class="w-[100px]" v-else v-model="patient_scan.reason_to_hos" />
+              </td>
+              <td class="px-6 py-4">
+                <span v-if="!isEditable">{{ patient_scan.status }} </span>
+                <input class="w-[200x]" v-else v-model="patient_scan.status" />
+              </td>
+              <td class="px-6 py-4">
+                <span v-if="!isEditable"> {{ patient_scan.symptom }}</span>
+                <input class="w-[200px]" v-else v-model="patient_scan.symptom" />
+              </td>
+              <td class="px-6 py-4">
+                <span v-if="isMeasure">
+                  Nhịp tim :{{ heart_beat }} Nồng độ o2: {{ ir_value }}% Nhiệt độ:
+                  {{ temperature }}°C</span
+                >
+              </td>
+
+              <td class="px-6 py-4">
+                <span v-if="!isEditable"> {{ patient_scan.diagnose }}</span>
+                <input class="w-[100px]" v-else v-model="patient_scan.diagnose" />
+              </td>
+              <td class="px-6 py-4">
+                <span v-if="!isEditable">{{ patient_scan.drug }} </span>
+                <input class="w-[100px]" v-else v-model="patient_scan.drug" />
+              </td>
+              <td class="px-6 py-4">
+                <button
+                  :disabled="!patient_scan.name"
+                  v-if="!isEditable"
+                  @click="toggleEdit(patient_scan)"
+                  class="btn normal-case p-3 rounded-xl"
+                >
+                  Edit
+                </button>
+                <button
+                  :disabled="!patient_scan.name"
+                  v-else
+                  @click="saveEdit(patient_scan)"
+                  class="btn normal-case rounded-xl p-3"
+                >
+                  Save
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-if="patient_scan.name != ''">
+        <button
+          :disabled="!patient_scan.name"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
+          @click="saveData(patient_scan)"
+        >
+          Save to database
+        </button>
+        <button
+          :disabled="!patient_scan.name"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
+          @click="Measure"
+        >
+          Measure
+        </button>
+      </div>
+    </div>
   </DefaultLayout>
 </template>
 
@@ -499,10 +608,14 @@ export default {
       temperature: '',
       isMeasure: false,
       isToast: false,
-      date_to_hos: ''
+      date_to_hos: '',
+      patient_scan: '',
+      isScan: false
     }
   },
-  mounted() {},
+  mounted() {
+    this.isScan = localStorage.getItem('is_scan')
+  },
   methods: {
     toggleEdit(patients) {
       // Toggle the editable state
@@ -549,6 +662,16 @@ export default {
       this.isMeasure = !this.isMeasure
       console.log(this.isMeasure)
       app.database().ref('doan').set({ isMeasure: this.isMeasure })
+    },
+    scanPatient() {
+      localStorage.removeItem('is_scan')
+      const patient_id = localStorage.getItem('patient_id')
+      axios
+        .post('http://localhost:8080/patient/get_patient', { patient_id })
+        .then(
+          (response) => (this.patient_scan = response.data.patient[0]),
+          console.log(this.patient_scan.name)
+        )
     }
   }
 }

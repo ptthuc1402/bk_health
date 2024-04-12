@@ -30,3 +30,12 @@ exports.indexName = async function (req, res) {
   }
   res.status(200).json({ data });
 };
+
+exports.getPatient = async function (req, res) {
+  //title
+  const patient_id_get = req.body.patient_id.slice(1, 4);
+  console.log(patient_id_get);
+  const patient = await Patient.find({ patient_id: patient_id_get });
+  console.log(patient);
+  res.status(200).json({ patient });
+};
