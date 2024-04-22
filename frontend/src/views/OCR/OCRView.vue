@@ -668,10 +668,7 @@ export default {
       const patient_id = localStorage.getItem('patient_id')
       axios
         .post('http://localhost:8080/patient/get_patient', { patient_id })
-        .then(
-          (response) => (this.patient_scan = response.data.patient[0]),
-          console.log(this.patient_scan.name)
-        )
+        .then((response) => (this.patient_scan = response.data.patient[0]))
     }
   }
 }

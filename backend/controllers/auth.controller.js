@@ -135,11 +135,9 @@ exports.signin = async function (req, res) {
       );
 
       if (!isPasswordCorrect)
-        return res
-          .status(400)
-          .json({
-            message: { noti: "Mật khẩu hoặc tên tài khoản không đúng" },
-          });
+        return res.status(400).json({
+          message: { noti: "Mật khẩu hoặc tên tài khoản không đúng" },
+        });
 
       const token = jwt.sign(
         { email: oldUser.email, id: oldUser._id },
@@ -154,7 +152,7 @@ exports.signin = async function (req, res) {
         status,
         token,
         role_id,
-        name: oldUser.name,
+        username: oldUser.name,
         email: oldUser.email,
       });
     }

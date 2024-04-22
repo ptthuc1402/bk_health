@@ -139,6 +139,8 @@ export default {
         )
         .then((response) => {
           if (response.data.token) {
+            localStorage.setItem('role_id', response.data.role_id)
+            localStorage.setItem('user_name', response.data.username)
             localStorage.setItem('user', JSON.stringify(response.data))
           }
           return response.data
