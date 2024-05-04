@@ -18,8 +18,9 @@ import AppointmentView from '@/views/Appointment/AppointmentView.vue'
 import AddAppointmentView from '@/views/Appointment/AddAppointmentView.vue'
 // @ts-ignore
 import FaceDetectView from '@/views/FaceDetect/FaceDetectView.vue'
-
 import TakePhotoComponent from '@/views/TakePhoto/TakePhotoComponent.vue'
+import FingerprintComponent from '@/views/Fingerprint/FingerprintComponent.vue'
+import DetectFingerView from '@/views/DetectFinger/DetectFingerView.vue'
 const routes = [
   {
     path: '/signin',
@@ -84,6 +85,16 @@ const routes = [
     path: '/take_photo',
     name: 'take_photo',
     component: TakePhotoComponent
+  },
+  {
+    path: '/res_fingerprint',
+    name: 'res_fingerprint',
+    component: FingerprintComponent
+  },
+  {
+    path: '/detect_finger',
+    name: 'detect_finger',
+    component: DetectFingerView
   }
 ]
 

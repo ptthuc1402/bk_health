@@ -598,6 +598,7 @@ onMounted(async () => {
 
 <script lang="ts">
 import axios from 'axios'
+import { app } from '@/const/const.ts'
 
 export default {
   data() {
@@ -610,11 +611,24 @@ export default {
       isToast: false,
       date_to_hos: '',
       patient_scan: '',
-      isScan: false
+      isScan: false,
+      heart_beat: '',
+      ir_value: '',
+      temperature: '',
+      isMeasure: false
     }
   },
   mounted() {
     this.isScan = localStorage.getItem('is_scan')
+    const self = this
+    app
+      .database()
+      .ref('measure')
+      .on('value', function (snapshot) {
+        self.heart_beat = snapshot.val().heart_beat || null
+        self.ir_value = snapshot.val().ir_value / 1000 || null
+        self.temperature = snapshot.val().temperature || null
+      })
   },
   methods: {
     toggleEdit(patients) {
@@ -661,11 +675,12 @@ export default {
       // Toggle the editable state
       this.isMeasure = !this.isMeasure
       console.log(this.isMeasure)
-      app.database().ref('doan').set({ isMeasure: this.isMeasure })
+      app.database().ref('measure').set({ isMeasure: this.isMeasure })
     },
     scanPatient() {
       localStorage.removeItem('is_scan')
       const patient_id = localStorage.getItem('patient_id')
+      const id_detected = localStorage.getItem('id_detected')
       axios
         .post('http://localhost:8080/patient/get_patient', { patient_id })
         .then((response) => (this.patient_scan = response.data.patient[0]))

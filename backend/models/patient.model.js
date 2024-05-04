@@ -57,6 +57,9 @@ const patientSchema = new Schema(
     img_url: {
       type: String,
     },
+    idFinger: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
