@@ -1,6 +1,6 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import OCRView from '@/views/OCR/OCRView.vue'
+// import OCRView from '@/views/OCR/OCRView.vue'
 </script>
 <template>
   <DefaultLayout>
@@ -121,7 +121,7 @@ export default {
         results.forEach((bestMatch, i) => {
           const box = detections[i].detection.box
           const text = bestMatch.toString()
-          const text_result = text.slice(text.length - 10, text.length - 7)
+          const text_result = text.slice(text.length - 10, text.length - 6)
           console.log(text, text_result)
           if (text && text.slice(0, 7) != 'unknown') {
             localStorage.setItem('patient_id', JSON.stringify(text_result))

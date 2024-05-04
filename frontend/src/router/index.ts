@@ -20,6 +20,7 @@ import AddAppointmentView from '@/views/Appointment/AddAppointmentView.vue'
 import FaceDetectView from '@/views/FaceDetect/FaceDetectView.vue'
 
 import TakePhotoComponent from '@/views/TakePhoto/TakePhotoComponent.vue'
+
 const routes = [
   {
     path: '/signin',
@@ -36,6 +37,11 @@ const routes = [
     meta: {
       title: 'Signup'
     }
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: ECommerceView
   },
   {
     path: '/',

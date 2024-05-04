@@ -1,6 +1,5 @@
 <script setup>
 import { onClickOutside } from '@vueuse/core'
-import axios from 'axios';
 import { ref } from 'vue'
 
 const target = ref(null)
