@@ -1,6 +1,5 @@
 <script setup>
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import OCRView from '@/views/OCR/OCRView.vue'
 </script>
 <template>
   <DefaultLayout>

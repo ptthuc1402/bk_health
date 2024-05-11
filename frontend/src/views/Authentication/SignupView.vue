@@ -200,7 +200,6 @@ export default {
             password: this.user_send.password,
             confirmPassword: this.user_send.confirmPassword
           },
-          {}
         )
         .then((response) => {
           if (response.data.token) {
@@ -208,12 +207,13 @@ export default {
             localStorage.setItem('role_id', response.data.role_id)
             localStorage.setItem('user', JSON.stringify(response.data))
           }
+          console.log(response)
           return response.data
         })
       event.preventDefault()
       setTimeout(() => {
         window.location.href = '/'
-      }, 1000)
+      }, 10000)
     }
   }
 }

@@ -83,7 +83,6 @@ export default {
       id_detected: 0,
       patients: {},
       canDetect: false,
-      mess: ''
     }
   },
   mounted() {

@@ -34,7 +34,7 @@ module.exports = (app) => {
     "/google/callback",
     passport.authenticate("google", {
       prompt: "select_account",
-      successRedirect: `${process.env.CLIENT_URL}` + "home",
+      successRedirect: `${process.env.CLIENT_URL}` + "home_user" ,
       failureRedirect: "auth/login/failed",
     })
   );

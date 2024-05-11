@@ -135,7 +135,6 @@ export default {
             email: this.user_send.email,
             password: this.user_send.password
           },
-          {}
         )
         .then((response) => {
           if (response.data.token) {
@@ -153,7 +152,6 @@ export default {
 
     googleAuth() {
       window.open('http://localhost:8080/auth/google', '_self')
-      console.log(user)
     }
   }
 }

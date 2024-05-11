@@ -1,4 +1,6 @@
-const Patient = require("../models/patient.model.js"); // create new patient
+const Patient = require("../models/patient.model.js"); 
+
+// create new patient
 exports.index = async function (req, res) {
   //title
   const patients = await Patient.find({});

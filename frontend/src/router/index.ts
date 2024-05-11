@@ -18,9 +18,14 @@ import AppointmentView from '@/views/Appointment/AppointmentView.vue'
 import AddAppointmentView from '@/views/Appointment/AddAppointmentView.vue'
 // @ts-ignore
 import FaceDetectView from '@/views/FaceDetect/FaceDetectView.vue'
+// @ts-ignore
 import TakePhotoComponent from '@/views/TakePhoto/TakePhotoComponent.vue'
+// @ts-ignore
 import FingerprintComponent from '@/views/Fingerprint/FingerprintComponent.vue'
+// @ts-ignore
 import DetectFingerView from '@/views/DetectFinger/DetectFingerView.vue'
+// @ts-ignore
+import UserBoard from '../views/Dashboard/UserBoard.vue'
 const routes = [
   {
     path: '/signin',
@@ -39,9 +44,29 @@ const routes = [
     }
   },
   {
-    path: '/',
+    path: '/home',
     name: 'home',
-    component: ECommerceView
+    component: ECommerceView,
+  },
+  {
+    path: '/home_user',
+    name: 'homeUser',
+    component: UserBoard
+  },
+  {
+    path: '/',
+    component: ECommerceView,
+    // @ts-ignore
+    beforeEnter: (to, from, next) => {
+    const isAdmin = JSON.parse(localStorage.getItem('role_id')!);
+      if ((JSON.parse(localStorage.getItem('user')!) === null)) {
+        return next({ path: '/signin' });
+      };
+      if ((JSON.parse(localStorage.getItem('user')!) !== null) && (isAdmin === 2)) {
+        return next({ path: '/home_user' });
+      }
+      next();
+    }
   },
   {
     path: '/ocr',
@@ -103,15 +128,15 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem('user')
-  const publicPages = ['/signin', '/signup']
-  const authRequired = !publicPages.includes(to.path)
-  if (authRequired && !isLoggedIn) {
-    next('/signin')
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   // const isLoggedIn = localStorage.getItem('user')
+//   const publicPages = ['/signin', '/signup'] 
+//   const authRequired = !publicPages.includes(to.path)
+//   if (authRequired) {
+//     next('/signin')
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

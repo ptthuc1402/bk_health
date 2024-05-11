@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { defineComponent } from 'vue'
 import { NUpload, NUploadDragger, NIcon, NText, NP, NImage, NModal, NCard } from 'naive-ui'
+// @ts-ignore
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { ref, onMounted } from 'vue'
+// @ts-ignore
 import { UploadFileInfo, useMessage } from 'naive-ui'
 import useClipboard from 'vue-clipboard3'
 import { useI18n } from 'vue-i18n'
@@ -149,7 +150,7 @@ async function handleFileListChange() {
   progressStatus.value = Status.Loading
   isShowModal.value = true
 }
-
+// @ts-ignore
 function handleDrop(event) {
   event.preventDefault()
   const files = event.dataTransfer.files
@@ -167,24 +168,29 @@ async function copyText() {
     console.error(e)
   }
 }
+// @ts-ignore
 
 function prettifyText() {
   prettifiedText.value = cleanText(recognizeText.value)
 }
 
+// @ts-ignore
 function resetText() {
   prettifiedText.value = recognizeText.value
 }
 
+// @ts-ignore
 async function addtotable() {
   try {
     const text_copy = await toClipboard(prettifiedText.value)
+// @ts-ignore
     const text = text_copy.text
   } catch (e) {
     console.error(e)
   }
 }
 
+// @ts-ignore
 // ref: https://web.dev/patterns/clipboard/paste-images/
 async function handlePaste(e) {
   try {
@@ -199,6 +205,7 @@ async function handlePaste(e) {
         blob = clipboardItem
       } else {
         // For files from `navigator.clipboard.read()`.
+       // @ts-ignore
         const imageTypes = clipboardItem.types?.filter((type) => type.startsWith('image/'))
         for (const imageType of imageTypes) {
           blob = await clipboardItem.getType(imageType)

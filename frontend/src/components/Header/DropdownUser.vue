@@ -26,7 +26,7 @@ onClickOutside(target, () => {
       </span>
 
       <span class="h-12 w-12 rounded-full">
-        <img src="@/assets/images/user/user-01.png" alt="User" />
+        <img src="@/assets/images/cover/cover-04.jpg" alt="User" />
       </span>
 
       <svg
@@ -170,7 +170,8 @@ export default {
       localStorage.removeItem('user')
       localStorage.removeItem('user_name')
       localStorage.removeItem('role_id')
-      window.location.reload()
+      axios.get('http://localhost:8080/auth/logout')
+      window.location.href = "/"
     }
   }
 }

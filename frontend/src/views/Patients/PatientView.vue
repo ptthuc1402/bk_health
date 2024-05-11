@@ -138,7 +138,6 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 <script>
 import axios from 'axios'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
 export default {
   data() {
     return {
@@ -148,7 +147,7 @@ export default {
     }
   },
   mounted() {
-    const data = this.search
+    // const data = this.search
     axios
       .get('http://localhost:8080/patient/index', {})
       .then((response) => [(this.patients = response.data.patients)])

@@ -104,7 +104,7 @@ export default {
   mounted() {
     axios
       .get('http://localhost:8080/doctor/index', {})
-      .then((response) => [(this.doctors = response.data.doctors)])
+      .then((response) => [(this.doctors = response.data.doctors)]);
   }
 }
 </script>

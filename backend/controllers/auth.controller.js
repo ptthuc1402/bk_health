@@ -84,15 +84,16 @@ exports.register = async function (req, res) {
       const token = jwt.sign({ email: user.email, id: user._id }, `${secret}`, {
         expiresIn: "3h",
       });
+
       const role_id = user.role_id;
 
       status = true;
       res.status(200).json({
+        username: user.name,
         status,
         token,
         role_id,
         email: user.email,
-        username: user.username,
       });
     }
   } catch (error) {
@@ -121,9 +122,10 @@ exports.signin = async function (req, res) {
         : (message.email = "Sai định dạng");
       return res.status(400).json({ message: message });
     } else {
+      
       const oldUser = await User.findOne({ email });
-      // console.log(oldUser.role_id);
 
+      // console.log(oldUser.role_id);
       if (!oldUser)
         return res
           .status(404)

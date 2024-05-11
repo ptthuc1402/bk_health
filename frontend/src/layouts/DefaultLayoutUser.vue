@@ -1,24 +1,21 @@
-<script setup>
+<script setup lang="ts">
 // @ts-ignore
 import HeaderArea from '@/components/Header/HeaderArea.vue'
-import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
 import SidebarAreaUser from '@/components/Sidebar/SidebarAreaUser.vue'
-const isAdmin = JSON.parse(localStorage.getItem('role_id'));
-console.log(isAdmin)
 </script>
 
 <template>
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
+    
     <!-- ===== Sidebar Start ===== -->
-    <SidebarArea v-if="isAdmin === 1"></SidebarArea> 
-    <SidebarAreaUser v-if="isAdmin !== 1"></SidebarAreaUser>
+    <SidebarAreaUser/>
     <!-- ===== Sidebar End ===== -->
 
     <!-- ===== Content Area Start ===== -->
     <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
       <!-- ===== Header Start ===== -->
-      <HeaderArea />
+      <HeaderArea/>
       <!-- ===== Header End ===== -->
 
       <!-- ===== Main Content Start ===== -->
@@ -32,7 +29,3 @@ console.log(isAdmin)
   </div>
   <!-- ===== Page Wrapper End ===== -->
 </template>
-
-<script>
-
-</script>

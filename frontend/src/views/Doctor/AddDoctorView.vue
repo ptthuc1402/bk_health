@@ -184,7 +184,8 @@ export default {
         sex: '',
         spec: ''
       },
-      isToast: false
+      isToast: false,
+      role_id:''
     }
   },
   methods: {
