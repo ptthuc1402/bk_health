@@ -1,28 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onMounted } from 'vue'
-import axios from 'axios';
+import axios from 'axios'
 
 var patients = ''
 var appoints = ''
 var doctors = ''
+var users = ''
 var patients_length = ref(0)
+var users_length = ref(0)
 var appoints_length = ref(0)
 var doctors_length = ref(0)
 
 type GetUsersResponse = {
   data: patients[]
-};
-
-
+}
 
 onMounted(async () => {
   patients = await getPatients()
   doctors = await getDoctors()
   appoints = await getAppoints()
+  users = await getUsers()
+
+  console.log(appoints.appoinments.length)
+  users_length.value = users.users.length ? users.users.length : 0
   doctors_length.value = doctors.doctors.length ? doctors.doctors.length : 0
   patients_length.value = patients.patients.length ? patients.patients.length : 0
-  appoints_length.value = appoints.appointments.length ? appoints.appointments.length : 0
+  appoints_length.value = appoints.appoinments.length ? appoints.appoinments.length : 0
 })
 
 async function getPatients() {
@@ -38,6 +42,16 @@ async function getPatients() {
   // 👇️ "response status is: 200"
   return data
 }
+async function getUsers() {
+  // 👇️ const data: GetUsersResponse
+  const { data, status } = await axios.get<GetUsersResponse>('http://localhost:8080/auth/index', {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+  // 👇️ "response status is: 200"
+  return data
+}
 async function getAppoints() {
   // 👇️ const data: GetUsersResponse
   const { data, status } = await axios.get<GetUsersResponse>(
@@ -48,7 +62,8 @@ async function getAppoints() {
       }
     }
   )
-  // 👇️ "response status is: 200"
+  // 👇️ "response status is: 200"c
+  console.log(data)
   return data
 }
 async function getDoctors() {
@@ -127,12 +142,19 @@ async function getDoctors() {
   <div
     class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark"
   >
-    <div class="flex h-11.5 w-11.5 items-center justify-center rounded-full"></div>
+    <div class="flex h-11.5 w-11.5 items-center justify-center rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+        <path
+          d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"
+        />
+      </svg>
+    </div>
 
     <div class="mt-4 flex items-end justify-between">
       <div>
-        <h4 class="text-title-md font-bold text-black dark:text-white">total</h4>
-        <span class="text-sm font-medium">title</span>
+        <h4 class="text-title-md font-bold text-black dark:text-white">{{ users_length }}</h4>
+        <span class="text-sm font-medium">Tổng số users</span>
       </div>
     </div>
   </div>

@@ -122,7 +122,6 @@ exports.signin = async function (req, res) {
         : (message.email = "Sai định dạng");
       return res.status(400).json({ message: message });
     } else {
-      
       const oldUser = await User.findOne({ email });
 
       // console.log(oldUser.role_id);
@@ -161,4 +160,10 @@ exports.signin = async function (req, res) {
   } catch (err) {
     res.status(500).json({ message: { noti: "Something went wrong!" } });
   }
+};
+
+exports.index = async function (req, res) {
+  const users = await User.find({});
+  console.log(users);
+  res.status(200).json({ users });
 };

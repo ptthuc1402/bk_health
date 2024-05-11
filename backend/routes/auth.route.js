@@ -4,7 +4,6 @@ module.exports = (app) => {
   require("dotenv").config();
 
   const auth = require("../controllers/auth.controller.js");
-
   const passport = require("passport");
 
   const authMiddle = require("../middlewares/user.middleware.js");
@@ -34,7 +33,7 @@ module.exports = (app) => {
     "/google/callback",
     passport.authenticate("google", {
       prompt: "select_account",
-      successRedirect: `${process.env.CLIENT_URL}` + "home_user" ,
+      successRedirect: `${process.env.CLIENT_URL}` + "home_user",
       failureRedirect: "auth/login/failed",
     })
   );
@@ -44,6 +43,7 @@ module.exports = (app) => {
     req.logout();
     res.redirect("/");
   });
+  router.get("/index", auth.index);
 
   app.use("/auth", router);
 };
