@@ -5,10 +5,18 @@ import OCRView from '@/views/OCR/OCRView.vue'
 <template>
   <DefaultLayout>
     <button
+      v-if="!isDetect"
       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
       @click="scanFinger"
     >
       Tiến hành quét vân tay
+    </button>
+    <button
+      v-if="isDetect"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
+      @click="scanFinger"
+    >
+      Dừng quét vân tay
     </button>
     <!-- <input
       type="text"
@@ -82,7 +90,7 @@ export default {
       mess: '',
       id_detected: 0,
       patients: {},
-      canDetect: false,
+      canDetect: false
     }
   },
   mounted() {
@@ -121,7 +129,10 @@ export default {
       //   }
       // }
 
-      app.database().ref('measure').set({ isDetect: this.isDetect })
+      app
+        .database()
+        .ref('measure')
+        .set({ isDetect: this.isDetect, isMeasure: false, isScan: false })
       // setTimeout(() => {
       //   app
       //     .database()
@@ -130,6 +141,7 @@ export default {
       // }, '1000')
     },
     submit() {
+      const self = this
       app
         .database()
         .ref('measure')
@@ -137,13 +149,14 @@ export default {
           self.id_detected = snapshot.val().fingerID_detect || null
         })
 
-      app.database().ref('measure').set({ isDetect: false, isScan: false })
-      console.log(id_detected)
-      localStorage.setItem('id_detected', id_detected)
+      console.log(this.id_detected)
+      localStorage.setItem('id_detected', this.id_detected)
       localStorage.setItem('is_scan', true)
-      axios
-        .post('http://localhost:8080/patient/get_patient', { id_detected })
-        .then((response) => (this.patient_scan = response.data.patient[0]))
+
+      app.database().ref('measure').set({ isDetect: false })
+      // axios
+      //   .post('http://localhost:8080/patient/get_patient', id_detected)
+      //   .then((response) => (this.patient_scan = response.data.patient[0]))
 
       window.location.href = '/ocr'
       // var partient_id = this.patient.patient_id

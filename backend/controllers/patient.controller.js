@@ -1,4 +1,4 @@
-const Patient = require("../models/patient.model.js"); 
+const Patient = require("../models/patient.model.js");
 
 // create new patient
 exports.index = async function (req, res) {
@@ -97,6 +97,7 @@ exports.getPatient = async function (req, res) {
   }
   var patient;
   console.log(patient_id_get);
+  console.log(id_detected);
   if (id_detected) {
     patient = await Patient.find({ idFinger: id_detected });
   } else {

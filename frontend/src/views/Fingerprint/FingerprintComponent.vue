@@ -5,10 +5,18 @@ import OCRView from '@/views/OCR/OCRView.vue'
 <template>
   <DefaultLayout>
     <button
+      v-if="!isScan"
       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
       @click="scanFinger"
     >
-      Scan Finger
+      Quét vân tay
+    </button>
+    <button
+      v-if="isScan"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
+      @click="scanFinger"
+    >
+      Dừng quét
     </button>
     <input
       type="text"
@@ -117,7 +125,12 @@ export default {
       this.isScan = !this.isScan
       console.log(this.isScan)
       console.log(this.patient.finger_id)
-      app.database().ref('measure').set({ isScan: this.isScan, id_count: this.patient.finger_id })
+      app.database().ref('measure').set({
+        isScan: this.isScan,
+        id_count: this.patient.finger_id,
+        isDetect: false,
+        isMeasure: false
+      })
       // setTimeout(() => {
       //   app
       //     .database()

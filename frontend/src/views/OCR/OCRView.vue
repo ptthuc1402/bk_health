@@ -183,7 +183,7 @@ function resetText() {
 async function addtotable() {
   try {
     const text_copy = await toClipboard(prettifiedText.value)
-// @ts-ignore
+    // @ts-ignore
     const text = text_copy.text
   } catch (e) {
     console.error(e)
@@ -205,7 +205,7 @@ async function handlePaste(e) {
         blob = clipboardItem
       } else {
         // For files from `navigator.clipboard.read()`.
-       // @ts-ignore
+        // @ts-ignore
         const imageTypes = clipboardItem.types?.filter((type) => type.startsWith('image/'))
         for (const imageType of imageTypes) {
           blob = await clipboardItem.getType(imageType)
@@ -445,12 +445,13 @@ onMounted(async () => {
       >
         Save to database
       </button>
+
       <button
         :disabled="!patients.name"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
         @click="Measure"
       >
-        Measure
+        Stop measuring
       </button>
     </div>
 
@@ -621,8 +622,7 @@ export default {
       isScan: false,
       heart_beat: '',
       ir_value: '',
-      temperature: '',
-      isMeasure: false
+      temperature: ''
     }
   },
   mounted() {
@@ -682,15 +682,28 @@ export default {
       // Toggle the editable state
       this.isMeasure = !this.isMeasure
       console.log(this.isMeasure)
-      app.database().ref('measure').set({ isMeasure: this.isMeasure })
+      app
+        .database()
+        .ref('measure')
+        .set({ isMeasure: this.isMeasure, isScan: false, isDetect: false })
     },
     scanPatient() {
       localStorage.removeItem('is_scan')
       const patient_id = localStorage.getItem('patient_id')
       const id_detected = localStorage.getItem('id_detected')
-      axios
-        .post('http://localhost:8080/patient/get_patient', { patient_id })
-        .then((response) => (this.patient_scan = response.data.patient[0]))
+      console.log(id_detected)
+      if (patient_id) {
+        axios
+          .post('http://localhost:8080/patient/get_patient', { patient_id, id_detected })
+          .then((response) => (this.patient_scan = response.data.patient[0]))
+      } else {
+        axios
+          .post('http://localhost:8080/patient/get_patient', { id_detected })
+          .then((response) => (this.patient_scan = response.data.patient[0]))
+      }
+
+      localStorage.removeItem('patient_id')
+      localStorage.removeItem('id_detected')
     }
   }
 }
