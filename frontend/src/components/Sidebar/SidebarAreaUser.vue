@@ -98,12 +98,10 @@ const menuGroups = ref([
                 </svg>`,
         label: 'Appointment',
         route: '#',
-        children: [
-          { label: 'Make Appointment', route: '/appoint/appoint_add' }
-        ]
-      },
+        children: [{ label: 'Make Appointment', route: '/appoint/appoint_add' }]
+      }
     ]
-  },
+  }
 ])
 </script>
 

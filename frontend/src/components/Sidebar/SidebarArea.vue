@@ -261,7 +261,7 @@ const menuGroups = ref([
                 </svg>`,
     label: 'Finger Detect',
     route: '/detect_finger'
-  },
+  }
 ])
 </script>
 
@@ -308,6 +308,27 @@ const menuGroups = ref([
           </div>
         </template>
       </nav>
+      <button
+        class="ml-[10px] text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right"
+        @click="scanFinger"
+      >
+        Reset Hardware
+      </button>
     </div>
   </aside>
 </template>
+<script lang="ts">
+import axios from 'axios'
+import { app } from '@/const/const.ts'
+
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    scanFinger() {
+      app.database().ref('measure').set({ isDetect: false, isMeasure: false, isScan: false })
+    }
+  }
+}
+</script>
