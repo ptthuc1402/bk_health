@@ -372,6 +372,7 @@ onMounted(async () => {
         <tbody>
           <tr class="bg-white border-b text-lg dark:bg-gray-900 dark:border-gray-700">
             <td class="px-6 py-4">
+              `
               <span v-if="!isEditable"> {{ patients.patient_id }} </span>
               <input class="w-[150px]" v-else v-model="patients.patient_id" />
             </td>
@@ -388,7 +389,7 @@ onMounted(async () => {
               <span v-if="!isEditable">{{ patients.job }} </span>
               <input class="w-[100px]" v-else v-model="patients.job" />
             </td>
-            <td class="px-6 py-4">
+            <td class="px-6 py-4 text-gray-500">
               <span v-if="!isEditable"> {{ patients.reason_to_hos }}</span>
               <input class="w-[100px]" v-else v-model="patients.reason_to_hos" />
             </td>
@@ -451,7 +452,7 @@ onMounted(async () => {
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-10 float-right mr-[200px]"
         @click="Measure"
       >
-        Stop measuring
+        Measure
       </button>
     </div>
 

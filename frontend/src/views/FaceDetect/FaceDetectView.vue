@@ -123,6 +123,7 @@ export default {
           const text_result = text.slice(text.length - 10, text.length - 7)
           console.log(text, text_result)
           if (text && text.slice(0, 7) != 'unknown') {
+            console.log('tesstttt')
             localStorage.setItem('patient_id', JSON.stringify(text_result))
             localStorage.setItem('is_scan', true)
             window.location.href = '/ocr'

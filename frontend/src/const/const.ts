@@ -1,13 +1,13 @@
 import firebase from 'firebase'
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyAeQRKp_YujlvFjDmASDYhszQop3z9_AdE',
-  authDomain: 'final-project-67f5b.firebaseapp.com',
-  databaseURL: 'https://final-project-67f5b-default-rtdb.asia-southeast1.firebasedatabase.app',
-  projectId: 'final-project-67f5b',
-  storageBucket: 'final-project-67f5b.appspot.com',
-  messagingSenderId: '742637064779',
-  appId: '1:742637064779:web:9e10ea1ba0e05de878f3ce'
+  apiKey: 'AIzaSyAaEkUsbjLhxn97sgxcyJ1NfgQ6BKSwsBw',
+  authDomain: 'final-project-c8ec9.firebaseapp.com',
+  databaseURL: 'https://final-project-c8ec9-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: 'final-project-c8ec9',
+  storageBucket: 'final-project-c8ec9.appspot.com',
+  messagingSenderId: '478994857105',
+  appId: '1:478994857105:web:3899497704f985069a1330'
 }
 export const app = firebase.initializeApp(firebaseConfig)
 export const db = app.database()
