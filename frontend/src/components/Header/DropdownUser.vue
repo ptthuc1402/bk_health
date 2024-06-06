@@ -1,6 +1,6 @@
 <script setup>
 import { onClickOutside } from '@vueuse/core'
-import axios from 'axios';
+import axios from 'axios'
 import { ref } from 'vue'
 
 const target = ref(null)
@@ -19,12 +19,14 @@ onClickOutside(target, () => {
       @click.prevent="dropdownOpen = !dropdownOpen"
     >
       <span class="hidden text-right lg:block">
-        <span class="block text-sm font-medium text-black dark:text-white">Thomas Anree</span>
-        <span class="block text-xs font-medium">UX Designer</span>
+        <span class="block text-base font-semibold text-black dark:text-white">{{
+          user_name
+        }}</span>
+        <span class="block text-sm font-semibold">Role: {{ role_id == 1 ? 'Admin' : 'User' }}</span>
       </span>
 
       <span class="h-12 w-12 rounded-full">
-        <img src="@/assets/images/user/user-01.png" alt="User" />
+        <img src="@/assets/images/cover/cover-04.jpg" alt="User" />
       </span>
 
       <svg
@@ -50,8 +52,8 @@ onClickOutside(target, () => {
       v-show="dropdownOpen"
       class="absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
     >
-      <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
-        <li>
+      <!-- <ul class="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark"> -->
+      <!-- <li>
           <router-link
             to="/profile"
             class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -121,12 +123,12 @@ onClickOutside(target, () => {
             </svg>
             Account Settings
           </router-link>
-        </li>
-      </ul>
+        </li> -->
+      <!-- </ul> -->
       <button
         class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
         @click="logout()"
-        >
+      >
         <svg
           class="fill-current"
           width="22"
@@ -153,12 +155,24 @@ onClickOutside(target, () => {
 
 <script>
 export default {
+  mounted() {
+    this.user_name = localStorage.getItem('user_name')
+    this.role_id = localStorage.getItem('role_id')
+  },
+  data() {
+    return {
+      user_name: '',
+      role_id: ''
+    }
+  },
   methods: {
     logout() {
-      localStorage.removeItem('user');
-      window.location.reload();
+      localStorage.removeItem('user')
+      localStorage.removeItem('user_name')
+      localStorage.removeItem('role_id')
+      axios.get('http://localhost:8080/auth/logout')
+      window.location.href = "/"
     }
+  }
 }
-}
- 
 </script>

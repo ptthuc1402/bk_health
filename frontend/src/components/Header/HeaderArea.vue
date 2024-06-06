@@ -1,10 +1,9 @@
 <script setup>
 import { useSidebarStore } from '@/stores/sidebar'
 import DarkModeSwitcher from './DarkModeSwitcher.vue'
-import DropdownMessage from './DropdownMessage.vue'
-import DropdownNotification from './DropdownNotification.vue'
+// import DropdownMessage from './DropdownMessage.vue'
+// import DropdownNotification from './DropdownNotification.vue'
 import DropdownUser from './DropdownUser.vue'
-
 
 const { isSidebarOpen, toggleSidebar } = useSidebarStore()
 </script>
@@ -58,7 +57,7 @@ const { isSidebarOpen, toggleSidebar } = useSidebarStore()
         </router-link>
       </div>
       <div class="hidden sm:block">
-        <form action="https://formbold.com/s/unique_form_id" method="POST">
+        <!-- <form action="https://formbold.com/s/unique_form_id" method="POST">
           <div class="relative">
             <button class="absolute top-1/2 left-0 -translate-y-1/2">
               <svg
@@ -90,7 +89,7 @@ const { isSidebarOpen, toggleSidebar } = useSidebarStore()
               class="w-full xl:w-125 bg-transparent pr-4 pl-9 focus:outline-none"
             />
           </div>
-        </form>
+        </form> -->
       </div>
 
       <div class="flex items-center gap-3 2xsm:gap-7">
@@ -102,11 +101,11 @@ const { isSidebarOpen, toggleSidebar } = useSidebarStore()
           </li>
 
           <!-- Notification Menu Area -->
-          <DropdownNotification />
+          <!-- <DropdownNotification /> -->
           <!-- Notification Menu Area -->
 
           <!-- Chat Notification Area -->
-          <DropdownMessage />
+          <!-- <DropdownMessage /> -->
           <!-- Chat Notification Area -->
         </ul>
 

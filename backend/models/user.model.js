@@ -1,46 +1,44 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 // create table users
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     name: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
     email: {
-        type: String,
-        require: true,
-        unique: true
+      type: String,
+      require: true,
+      unique: true,
     },
     password: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
     role_id: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
-    googleId:
-    {
-        type: String,
-        require:false
+    googleId: {
+      type: String,
+      require: false,
     },
-    accessToken: 
-    {
-        type: String,
+    accessToken: {
+      type: String,
     },
-    picture: 
-    {
-        type: String
+    picture: {
+      type: String,
     },
-    idToken:
-    {
-        type: String
-    }
-}, { timestamps: true });
+    idToken: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-
-const User = mongoose.model('users', userSchema);
+const User = mongoose.model("users", userSchema);
 
 module.exports = User;
